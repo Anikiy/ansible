@@ -1,20 +1,20 @@
-port 1194 
-proto udp
+port {{ openvpn_port }}  
+proto {{ openvpn_proto }}
 dev tun 
 
-ca /etc/openvpn/server/ca.crf
-cert /etc/openvpn/server/server.crt
-key /etc/openvpn/server/server.key
-dh /etc/openvpn/server/dh.pem
+ca {{ openvpn_dir }}/openvpn/server/ca.crf
+cert {{ openvpn_dir }}/openvpn/server/server.crt
+key {{ openvpn_dir }}/openvpn/server/server.key
+dh {{ openvpn_dir }}/openvpn/server/dh.pem
 
-tls-auth /etc/openvpn/ta.key 0
+tls-auth {{ openvpn_dir }}/openvpn/ta.key 0
 tls-server
 auth SHA 256
 cipther AES-256-CBC
 tls-version-min 1.2
 tls-cipher TLS-ECDHE-ECDSA-WITH-AES-256-GCM-SHA384:TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-256-GCM-SHA284:TLS-ECDSA-WITH-AES-256-CBC-SHA384:TLS-ECDHE-RSA-WITH-AES-256-CBC-SHA384:TLS-DHE-RSA-WITH-AES-256-CBC-SHA256
 
-server 10.9.0.0 255.255.255.0
+server {{ openvpn_network }} {{ openvon_netmask }}
 topolology subnet
 ifconfig-pool-persist ipp.txt
 push "redirect-gateway defi bypass-dhcp"
