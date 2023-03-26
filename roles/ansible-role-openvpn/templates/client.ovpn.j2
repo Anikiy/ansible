@@ -6,8 +6,8 @@ cipher AES-256-CBC
 remote-cert-tls server
 tls-version-min 1.2
 
-proto udp
-remote 45.150.188.72 {{ openvpn_port }}
+proto {{ openvpn_proto }}
+remote {{ openvpn_address }} {{ openvpn_port }}
 dev tun
 
 resolv-retry 5 
@@ -22,19 +22,17 @@ route-delay 2
 
 key-direction 1 
 <ca>
-CA.crt 
+{{ openvpn_ca_cert.content|b64decode }} 
 </ca>
 
 <tls-auth>
-#
-#2048 bit OpenVPN static key
-#
+{{ openvpn_tls_auth.content|b64decode }}
 </tls-auth>
 
 <cert>
+{{ item.0.content|b64decode }}
 </cert>
 
 <key>
------BEGIN PRIVATE KEY-----
------END PRIVATE KEY-----
+{{ item.1.content|b64decode }}
 </key>
