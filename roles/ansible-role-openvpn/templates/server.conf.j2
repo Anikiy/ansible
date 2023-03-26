@@ -14,7 +14,7 @@ cipther AES-256-CBC
 tls-version-min 1.2
 tls-cipher TLS-ECDHE-ECDSA-WITH-AES-256-GCM-SHA384:TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-256-GCM-SHA284:TLS-ECDSA-WITH-AES-256-CBC-SHA384:TLS-ECDHE-RSA-WITH-AES-256-CBC-SHA384:TLS-DHE-RSA-WITH-AES-256-CBC-SHA256
 
-server {{ openvpn_network }} {{ openvon_netmask }}
+server {{ openvpn_network }} {{ openvpn_netmask }}
 topolology subnet
 ifconfig-pool-persist ipp.txt
 push "redirect-gateway defi bypass-dhcp"
