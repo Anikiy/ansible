@@ -1,6 +1,6 @@
 ---
-- name: "copy client-crt files to {{ openvpn_dir }}/server"
-  ansible.builtin.copy
+- name: "copy clients-crt files to {{ openvpn_dir }}/server"
+  ansible.builtin.copy:
     src: "{{ openvpn_dir }}/easy-rsa/pki/issued/{{ item }}.crt"
     dest: "{{ openvpn_dir }}/server/{{ item }}.crt"
     mode: "0644"
@@ -8,8 +8,8 @@
   with_items:
     - "{{ openvpn_clients }}"
     
-- name: "copy client-key files to {{ openvpn_dir }}/server"
-  ansible.builtin.copy
+- name: "copy clients-key files to {{ openvpn_dir }}/server"
+  ansible.builtin.copy:
     src: "{{ openvpn_dir }}/easy-rsa/pki/private/{{ item }}.key"
     dest: "{{ openvpn_dir }}/server/{{ item }}.key"
     mode: "0644"
@@ -24,17 +24,17 @@
     mode: 0755
     
 - name: "copy files to {{ openvpn_dir }}/users"
-  ansible.builtin.copy
+  ansible.builtin.copy:
     src: "{{ openvpn_dir }}/easy-rsa/pki/{{ item }}"
-    dest: "{{ openvpn_dir }}/{{ item | basename }}"
+    dest: "{{ openvpn_dir }}//users{{ item | basename }}"
     mode: "0644"
     remote_src: true
   loop:
     - ca.crt
     - ta.key
     
-- name: "copy client-crt files to {{ openvpn_dir }}/users"
-  ansible.builtin.copy
+- name: "copy clients-crt files to {{ openvpn_dir }}/users"
+  ansible.builtin.copy:
     src: "{{ openvpn_dir }}/easy-rsa/pki/issued/{{ item }}.crt"
     dest: "{{ openvpn_dir }}/users/{{ item }}.crt"
     mode: "0644"
@@ -42,8 +42,8 @@
   with_items:
     - "{{ openvpn_clients }}"
     
-- name: "copy client-key files to {{ openvpn_dir }}/users"
-  ansible.builtin.copy
+- name: "copy clients-key files to {{ openvpn_dir }}/users"
+  ansible.builtin.copy:
     src: "{{ openvpn_dir }}/easy-rsa/pki/private/{{ item }}.key"
     dest: "{{ openvpn_dir }}/users/{{ item }}.key"
     mode: "0644"
