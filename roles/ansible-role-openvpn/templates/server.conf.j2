@@ -9,7 +9,7 @@ dh {{ openvpn_dir }}/openvpn/server/dh.pem
 
 tls-auth {{ openvpn_dir }}/openvpn/ta.key 0
 tls-server
-auth SHA 256
+auth SHA256
 cipther AES-256-CBC
 tls-version-min 1.2
 tls-cipher TLS-ECDHE-ECDSA-WITH-AES-256-GCM-SHA384:TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-256-GCM-SHA384:TLS-ECDHE-ECDSA-WITH-AES-256-CBC-SHA384:TLS-ECDHE-RSA-WITH-AES-256-CBC-SHA384:TLS-DHE-RSA-WITH-AES-256-CBC-SHA256
