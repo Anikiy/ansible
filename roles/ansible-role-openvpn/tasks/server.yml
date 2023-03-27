@@ -46,13 +46,13 @@
 
 - name: easy-rsa init_pki
   command:
-    cmd: "{{ openvpn_easyrsa_dir }}/easy-rsa init-pki "
+    cmd: "{{ openvpn_easyrsa_dir }}/easyrsa init-pki "
     chdir: "{{ openvpn_dir }}/easy-rsa"
     creates: "{{ openvpn_dir }}/easy-rsa/pki"
 
 - name: easy-rsa build-ca
   command:
-    cmd: "{{ openvpn_easyrsa_dir }}/easy-rsa build-ca nopass"
+    cmd: "{{ openvpn_easyrsa_dir }}/easyrsa build-ca nopass"
     chdir: "{{ openvpn_dir }}/easy-rsa"
     creates: "{{ openvpn_dir }}/easy-rsa/pki/ca.crt"
   environment:
@@ -60,7 +60,7 @@
 
 - name: easy-rsa gen-dh
   command:
-    cmd: "{{ openvpn_easyrsa_dir }}/easy-rsa gen-dh"
+    cmd: "{{ openvpn_easyrsa_dir }}/easyrsa gen-dh"
     chdir: "{{ openvpn_dir }}/easy-rsa"
     creates: "{{ openvpn_dir }}/easy-rsa/pki/dh.pem"
 
@@ -74,13 +74,13 @@
   command:
     cmd: "{{ openvpn_easyrsa_dir }}/easyrsa build-client-full {{ item }} nopass"
     chdir: "{{ openvpn_dir }}/easy-rsa"
-    creates: "{{ openvpn_dir }}/easy-rsa/pki/{{ item }}.crt"
+    creates: "{{ openvpn_dir }}/easy-rsa/pki/issued/{{ item }}.crt"
   with_items:
     - "{{ openvpn_clients }}"
     
 - name: easy-rsa gen-crl
   command:
-    cmd: "{{ openvpn_easyrsa_dir }}/easy-rsa gen-cly "
+    cmd: "{{ openvpn_easyrsa_dir }}/easyrsa gen-cly"
     chdir: "{{ openvpn_dir }}/easy-rsa"
     creates: "{{ openvpn_dir }}/easy-rsa/pki/crl.pem"
     
@@ -90,7 +90,7 @@
     creates: "{{ openvpn_dir }}/easy-rsa/pki/ta.key"
     
 - name: "copy files to {{ openvpn_dir }}/server"
-  ansible.builtin.copy
+  ansible.builtin.copy:
     src: "{{ openvpn_dir }}/easy-rsa/pki/{{ item }}"
     dest: "{{ openvpn_dir }}/server/{{ item | basename }}"
     mode: "0644"
@@ -104,7 +104,7 @@
     - issued/server.crt
     
 - name: "copy files to {{ openvpn_dir }}"
-  ansible.builtin.copy
+  ansible.builtin.copy:
     src: "{{ openvpn_dir }}/easy-rsa/pki/{{ item }}"
     dest: "{{ openvpn_dir }}/{{ item | basename }}"
     mode: "0644"
