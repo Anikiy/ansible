@@ -8,5 +8,5 @@
 - name: enable openvpn
   service:
     name: openvpn 
-    enable: true
+    enabled: true
     state: started
